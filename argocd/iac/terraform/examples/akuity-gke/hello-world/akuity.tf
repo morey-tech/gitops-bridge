@@ -8,6 +8,30 @@ resource "akp_instance" "argocd" {
       "version" = "v2.7.10"
     }
   }
+  argocd_cm = {
+    # When configuring the `argocd_cm`, make sure to specify the following keys 
+    # (from "admin.enabled", to "users.anonymous.enabled") since those keys are
+    # added by Akuity Platform by default. If they are not defined, you may see
+    # inconsistent results and errors from the provider. Feel free to customize
+    # the values based on your usage, but the keys themselves must be specified.
+    # Note that "admin.enabled" cannot be set to true independently, and an
+    # "accounts.admin" key is required, like the "accounts.alice" key below, once
+    # you add that, remove the "admin.enabled" key.
+    # "admin.enabled"                  = true
+    "exec.enabled"                   = false
+    "ga.anonymizeusers"              = false
+    "helm.enabled"                   = true
+    "kustomize.enabled"              = true
+    "server.rbac.log.enforce.enable" = false
+    "statusbadge.enabled"            = false
+    "ui.bannerpermanent"             = false
+    "users.anonymous.enabled"        = false
+
+    "accounts.admin" = "login"
+  }
+  argocd_secret = {
+    "admin.password" = "${bcrypt(var.argocd_admin_password)}"
+  }
 }
 
 data "google_client_config" "current" {}

@@ -43,7 +43,7 @@ variable "gke_project_id" {
 
 variable "gke_region" {
   description = "region"
-  default = "us-west1"
+  default     = "us-west1"
 }
 
 ############
@@ -52,4 +52,9 @@ variable "gke_region" {
 variable "akp_org_name" {
   type        = string
   description = "Akuity Platform organization name."
+}
+
+variable "argocd_admin_password" {
+  type        = string
+  description = "The password to use for the `admin` Argo CD user."
 }
