@@ -32,6 +32,11 @@ resource "akp_instance" "argocd" {
   argocd_secret = {
     "admin.password" = "${bcrypt(var.argocd_admin_password)}"
   }
+  lifecycle {
+    ignore_changes = [
+      argocd_secret["admin.password"],
+    ]
+  }
 }
 
 data "google_client_config" "current" {}
@@ -60,10 +65,12 @@ resource "akp_cluster" "gitops-bridge" {
     }
   }
 
-  # When using a Kubernetes token retrieved from a Terraform provider (e.g. aws_eks_cluster_auth or google_client_config) in the above `kube_config`,
-  # the token value may change over time. This will cause Terraform to detect a diff in the `token` on each plan and apply.
-  # To prevent constant changes, you can add the `token` field path to the `lifecycle` block's `ignore_changes` list:
-  #  https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle#ignore_changes
+  # When using a Kubernetes token retrieved from a Terraform provider
+  # (e.g. aws_eks_cluster_auth or google_client_config) in the above `kube_config`,
+  # the token value may change over time. This will cause Terraform to detect a diff
+  # in the `token` on each plan and apply. To prevent constant changes, you can add
+  # the `token` field path to the `lifecycle` block's `ignore_changes` list:
+  # https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle#ignore_changes
   lifecycle {
     ignore_changes = [
       kube_config.token,
