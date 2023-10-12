@@ -1,5 +1,5 @@
 locals {
-  name                 = "gitops-bridge-gke"
+  cluster_name         = "gitops-bridge-gke"
   environment          = "dev"
   addons_repo_url      = "https://github.com/morey-tech/gitops-bridge-control-plane"
   addons_repo_path     = "addons"

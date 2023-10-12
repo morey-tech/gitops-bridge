@@ -7,7 +7,7 @@ data "google_container_engine_versions" "gke_version" {
 }
 
 resource "google_container_cluster" "gke-01" {
-  name     = "gitops-bridge-gke-01"
+  name     = "${local.cluster_name}-${local.environment}"
   location = var.gke_region
 
   # We can't create a cluster with no node pool defined, but we want to only use
@@ -82,4 +82,6 @@ resource "kubernetes_cluster_role_binding" "client_cluster_admin" {
     name      = "system:masters"
     api_group = "rbac.authorization.k8s.io"
   }
+
+  depends_on = [google_container_cluster.gke-01]
 }

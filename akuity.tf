@@ -50,7 +50,7 @@ resource "akp_cluster" "gitops-bridge" {
     client_key             = "${base64decode(google_container_cluster.gke-01.master_auth.0.client_key)}"
     cluster_ca_certificate = "${base64decode(google_container_cluster.gke-01.master_auth.0.cluster_ca_certificate)}"
   }
-  name      = local.name
+  name      = "${local.cluster_name}-${local.environment}"
   namespace = "akuity"
   labels    = merge({ environment = local.environment }, local.oss_addons)
   annotations = {
@@ -59,11 +59,12 @@ resource "akp_cluster" "gitops-bridge" {
     addons_repo_revision = local.addons_repo_revision
   }
   spec = {
-    description = "${local.name} cluster"
+    description = "${local.cluster_name}-${local.environment} cluster"
     data = {
       size = "small"
     }
   }
+  remove_agent_resources_on_destroy = false
 
   # When using a Kubernetes token retrieved from a Terraform provider
   # (e.g. aws_eks_cluster_auth or google_client_config) in the above `kube_config`,
