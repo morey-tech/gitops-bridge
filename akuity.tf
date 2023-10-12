@@ -50,7 +50,7 @@ resource "akp_cluster" "gitops-bridge" {
     client_key             = "${base64decode(google_container_cluster.gke-01.master_auth.0.client_key)}"
     cluster_ca_certificate = "${base64decode(google_container_cluster.gke-01.master_auth.0.cluster_ca_certificate)}"
   }
-  name      = "${local.name}"
+  name      = local.name
   namespace = "akuity"
   labels    = merge({ environment = local.environment }, local.oss_addons)
   annotations = {
