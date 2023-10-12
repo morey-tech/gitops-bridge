@@ -35,7 +35,7 @@ provider "akp" {
 provider "argocd" {
   server_addr = "${akp_instance.argocd.argocd.spec.instance_spec.subdomain}.cd.akuity.cloud:443"
   username    = "admin"
-  password    = "${var.argocd_admin_password}"
+  password    = var.argocd_admin_password
 }
 
 provider "kubernetes" {
