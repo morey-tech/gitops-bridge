@@ -1,7 +1,10 @@
 resource "argocd_application" "app_of_apps" {
   metadata {
-    name      = "app-of-apps"
+    name      = "bootstrap-appsets"
     namespace = "argocd"
+    labels = {
+      cluster = "in-cluster"
+    }
   }
   cascade = false # disable cascading deletion
   wait    = true
@@ -12,8 +15,9 @@ resource "argocd_application" "app_of_apps" {
       namespace = "argocd"
     }
     source {
-      repo_url        = "https://github.com/morey-tech/control-plane"
-      path            = "argocd/"
+      repo_url        = local.addons_repo_url
+      path            = local.addons_repo_path
+      target_revision = local.addons_repo_revision
       directory {
         recurse = true
       }

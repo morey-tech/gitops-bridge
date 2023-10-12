@@ -50,16 +50,16 @@ resource "akp_cluster" "gitops-bridge" {
     client_key             = "${base64decode(google_container_cluster.gke-01.master_auth.0.client_key)}"
     cluster_ca_certificate = "${base64decode(google_container_cluster.gke-01.master_auth.0.cluster_ca_certificate)}"
   }
-  name      = "gitops-bridge-gke"
+  name      = "${local.name}"
   namespace = "akuity"
-  labels = {
-    provider = "gcp"
-  }
+  labels    = merge({ environment = local.environment }, local.oss_addons)
   annotations = {
-    argocd-enabled = "false"
+    addons_repo_url      = local.addons_repo_url
+    addons_repo_path     = local.addons_repo_path
+    addons_repo_revision = local.addons_repo_revision
   }
   spec = {
-    description = "gitops-bridge gke cluster"
+    description = "${local.name} cluster"
     data = {
       size = "small"
     }
