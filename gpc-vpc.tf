@@ -1,6 +1,6 @@
 # VPC
 resource "google_compute_network" "vpc" {
-  name                    = "${var.gke_project_id}-gitops-bridge-vpc"
+  name = "${var.gke_project_id}-gitops-bridge-vpc"
   # name                    = "${var.gke_project_id}-${local.cluster_name}-vpc"
   auto_create_subnetworks = "false"
 }
