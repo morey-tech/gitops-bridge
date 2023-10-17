@@ -57,6 +57,7 @@ resource "akp_cluster" "gitops-bridge" {
     addons_repo_url      = local.addons_repo_url
     addons_repo_path     = local.addons_repo_path
     addons_repo_revision = local.addons_repo_revision
+    ingress_static_ip    = google_compute_address.static.address
   }
   spec = {
     description = "${local.cluster_name}-${local.environment} cluster"
