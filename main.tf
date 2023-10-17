@@ -9,5 +9,6 @@ locals {
   oss_addons = {
     enable_argo_rollouts  = true
     enable_argo_workflows = true
+    enable_ingress_nginx  = true
   }
 }
