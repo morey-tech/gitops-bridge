@@ -1,6 +1,6 @@
-resource "argocd_application" "app_of_apps" {
+resource "argocd_application" "bootstrap" {
   metadata {
-    name      = "bootstrap-appsets"
+    name      = "bootstrap"
     namespace = "argocd"
     labels = {
       cluster = "in-cluster"
