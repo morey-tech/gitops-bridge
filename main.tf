@@ -7,8 +7,8 @@ locals {
 
   # Each entry must have a corresponding ApplicationSet in the `addons_repo`.
   oss_addons = {
-    enable_argo_rollouts  = true
-    enable_argo_workflows = true
-    enable_ingress_nginx  = true
+    enable_cert_manager  = true
+    enable_external_dns  = true
+    enable_ingress_nginx = true
   }
 }
